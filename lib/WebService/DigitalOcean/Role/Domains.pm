@@ -9,7 +9,7 @@ use Type::Params qw/compile/;
 
 requires 'make_request';
 
-our $VERSION = '0.001'; # TRIAL VERSION
+our $VERSION = '0.001'; # VERSION
 
 sub domain_create {
     state $check = compile(Object,
@@ -18,9 +18,9 @@ sub domain_create {
             ip_address => Str,
         ],
     );
-    my ($self, %opts) = $check->(@_);
+    my ($self, $opts) = $check->(@_);
 
-    return $self->make_request(POST => '/domains', \%opts);
+    return $self->make_request(POST => '/domains', $opts);
 }
 
 sub domain_list {
@@ -36,9 +36,9 @@ sub domain_get {
             domain => Str,
         ],
     );
-    my ($self, %opts) = $check->(@_);
+    my ($self, $opts) = $check->(@_);
 
-    return $self->make_request(GET => "/domains/$opts{domain}");
+    return $self->make_request(GET => "/domains/$opts->{domain}");
 }
 
 sub domain_delete {
@@ -47,9 +47,9 @@ sub domain_delete {
             domain => Str,
         ],
     );
-    my ($self, %opts) = $check->(@_);
+    my ($self, $opts) = $check->(@_);
 
-    return $self->make_request(DELETE => "/domains/$opts{domain}");
+    return $self->make_request(DELETE => "/domains/$opts->{domain}");
 }
 
 1;
@@ -72,11 +72,72 @@ version 0.001
 
 =head2 domain_create
 
+=head3 Arguments
+
+=over
+
+=item Str name
+
+The domain name.
+
+=item Str ip_address
+
+The IP address the domain will point to.
+
+=back
+
+Creates a new domain name.
+
+    $do->domain_create(
+        name => 'example.com',
+        ip_address => '12.34.56.78',
+    );
+
 =head2 domain_delete
+
+=head3 Arguments
+
+=over
+
+=item Str domain
+
+The domain name.
+
+=back
+
+Deletes the specified domain.
+
+    $do->domain_delete(
+        domain => 'example.com',
+    );
 
 =head2 domain_get
 
+=head3 Arguments
+
+=over
+
+=item Str domain
+
+The domain name.
+
+=back
+
+Retrieves the specified domain.
+
+    my $response = $do->domain_get(
+        domain => 'example.com',
+    );
+
 =head2 domain_list
+
+Lists all domains for this account.
+
+    my $response = $do->domain_list();
+
+    for (@{ $response->{content}{domains} }) {
+        print $_->{id};
+    }
 
 =head1 AUTHOR
 

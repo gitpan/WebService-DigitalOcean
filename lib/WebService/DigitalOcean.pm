@@ -10,9 +10,10 @@ use utf8;
 with
     'WebService::DigitalOcean::Role::UserAgent',
     'WebService::DigitalOcean::Role::Domains',
-    'WebService::DigitalOcean::Role::DomainRecords';
+    'WebService::DigitalOcean::Role::DomainRecords',
+    'WebService::DigitalOcean::Role::Droplets';
 
-our $VERSION = '0.001'; # TRIAL VERSION
+our $VERSION = '0.001'; # VERSION
 
 has api_base_url => (
     is      => 'ro',
@@ -66,8 +67,8 @@ version 0.001
 
 This module implements DigitalOceans new RESTful API.
 
-It's on a very early stage of development, expect new features, better docs and
-tests very soon.
+It's on a very early stage of development, so expect new features, better docs
+and tests very soon.
 
 Patches welcome: L<< https://github.com/andrewalker/p5-webservice-digitalocean >>
 
@@ -75,16 +76,48 @@ Patches welcome: L<< https://github.com/andrewalker/p5-webservice-digitalocean >
 
 =head2 api_base_url
 
+A string prepended to all API endpoints. By default, it's
+https://api.digitalocean.com/v2. This can be adjusted to facilitate tests.
+
 =head2 token
+
+The authorization token. It can be retrieved by logging into one's DigitalOcean
+account, and generating a personal token here:
+L<< https://cloud.digitalocean.com/settings/applications >>.
 
 =head1 SEE ALSO
 
-L<DigitalOcean>
+=over
+
+=item *
+
+L<DigitalOcean>: original DigitalOcean module, for v1 API.
+
+=item *
+
+L<< https://developers.digitalocean.com >>: Documentation for API v2, in DigitalOcean's website.
+
+=item *
+
+L<< Droplets role| WebService::DigitalOcean::Role::Droplets >>: Manage droplets with this module.
+
+=item *
+
+L<< Domains role| WebService::DigitalOcean::Role::Domains >>: Manage domains with this module.
+
+=item *
+
+L<< Domain Records role| WebService::DigitalOcean::Role::DomainRecords >>: Manage domain records with this module.
+
+=back
 
 =head1 CAVEATS
 
 This is alpha software. The interface is unstable, and may change without
 notice.
+
+Also, there are no real unit tests. We currently only test compilation and
+instantiation of the module.
 
 =head1 AUTHOR
 

@@ -22,6 +22,9 @@ provides:
   WebService::DigitalOcean::Role::Domains:
     file: lib/WebService/DigitalOcean/Role/Domains.pm
     version: '0.001'
+  WebService::DigitalOcean::Role::Droplets:
+    file: lib/WebService/DigitalOcean/Role/Droplets.pm
+    version: '0.001'
   WebService::DigitalOcean::Role::UserAgent:
     file: lib/WebService/DigitalOcean/Role/UserAgent.pm
     version: '0.001'
@@ -31,6 +34,7 @@ requires:
   LWP::UserAgent: '0'
   Moo: '0'
   Type::Tiny: '0'
+  perl: '5.010'
 resources:
   bugtracker: https://github.com/andrewalker/p5-webservice-digitalocean/issues
   repository: git://github.com/andrewalker/p5-webservice-digitalocean.git

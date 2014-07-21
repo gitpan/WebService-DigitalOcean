@@ -9,12 +9,13 @@ use Type::Params qw/compile/;
 
 requires 'make_request';
 
-our $VERSION = '0.001'; # TRIAL VERSION
+our $VERSION = '0.001'; # VERSION
 
 sub domain_record_create {
     state $check = compile(Object,
         slurpy Dict[
             domain   => Str,
+            type     => Str,
             name     => Optional[Str],
             data     => Optional[Str],
             priority => Optional[Int],
@@ -22,11 +23,11 @@ sub domain_record_create {
             weight   => Optional[Int],
         ],
     );
-    my ($self, %opts) = $check->(@_);
+    my ($self, $opts) = $check->(@_);
 
-    my $domain = delete $opts{domain};
+    my $domain = delete $opts->{domain};
 
-    return $self->make_request(POST => "/domains/$domain/records", \%opts);
+    return $self->make_request(POST => "/domains/$domain/records", $opts);
 }
 
 sub domain_record_list {
@@ -35,9 +36,9 @@ sub domain_record_list {
             domain => Str,
         ],
     );
-    my ($self, %opts) = $check->(@_);
+    my ($self, $opts) = $check->(@_);
 
-    return $self->make_request(GET => "/domains/$opts{domain}/records");
+    return $self->make_request(GET => "/domains/$opts->{domain}/records");
 }
 
 sub domain_record_get {
@@ -47,9 +48,9 @@ sub domain_record_get {
             id     => Int,
         ],
     );
-    my ($self, %opts) = $check->(@_);
+    my ($self, $opts) = $check->(@_);
 
-    return $self->make_request(GET => "/domains/$opts{domain}/records/$opts{id}");
+    return $self->make_request(GET => "/domains/$opts->{domain}/records/$opts->{id}");
 }
 
 sub domain_record_delete {
@@ -59,9 +60,9 @@ sub domain_record_delete {
             id     => Int,
         ],
     );
-    my ($self, %opts) = $check->(@_);
+    my ($self, $opts) = $check->(@_);
 
-    return $self->make_request(DELETE => "/domains/$opts{domain}/records/$opts{id}");
+    return $self->make_request(DELETE => "/domains/$opts->{domain}/records/$opts->{id}");
 }
 
 # TODO:
@@ -87,11 +88,120 @@ version 0.001
 
 =head2 domain_record_create
 
+=head3 Arguments
+
+=over
+
+=item Str domain
+
+The domain under which the record will be created.
+
+=item Str type
+
+The type of the record (eg MX, CNAME, A, etc).
+
+=item Optional[Str] name
+
+The name of the record.
+
+=item Optional[Str] data
+
+The data (such as the IP address) of the record.
+
+=item Optional[Int] priority
+
+Priority, for MX or SRV records.
+
+=item Optional[Int] port
+
+The port, for SRV records.
+
+=item Optional[Int] weight
+
+The weight, for SRV records.
+
+=back
+
+Creates a new record for a domain.
+
+    my $response = $do->domain_record_create(
+        domain => 'example.com',
+        type   => 'A',
+        name   => 'www2',
+        data   => '12.34.56.78',
+    );
+
+    my $id = $response->{content}{domain_record}{id};
+
 =head2 domain_record_delete
+
+=head3 Arguments
+
+=over
+
+=item Str domain
+
+The domain to which the record belongs.
+
+=item Int id
+
+The id of the record.
+
+=back
+
+Deletes the specified record.
+
+    $do->domain_record_delete(
+        domain => 'example.com',
+        id     => 1215,
+    );
 
 =head2 domain_record_get
 
+=head3 Arguments
+
+=over
+
+=item Str domain
+
+The domain to which the record belongs.
+
+=item Int id
+
+The id of the record.
+
+=back
+
+Retrieves details about a particular record, identified by id.
+
+    my $response = $do->domain_record_get(
+        domain => 'example.com',
+        id     => 1215,
+    );
+
+    my $ip = $response->{content}{domain_record}{data};
+
 =head2 domain_record_list
+
+=head3 Arguments
+
+=over
+
+=item Str domain
+
+The domain to which the records belong.
+
+=back
+
+Retrieves all the records for a particular domain.
+
+    my $response = $do->domain_record_list(
+        domain => 'example.com',
+    );
+
+    for (@{ $response->{content}{domain_records} }) {
+        print "$_->{name} => $_->{data}\n";
+    }
 
 =head1 AUTHOR
 
