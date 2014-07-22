@@ -6,7 +6,7 @@ use JSON ();
 use DateTime;
 use utf8;
 
-our $VERSION = '0.001'; # VERSION
+our $VERSION = '0.002'; # VERSION
 
 has ua => (
     is => 'lazy',
@@ -77,7 +77,7 @@ WebService::DigitalOcean::Role::UserAgent - User Agent Role for DigitalOcean Web
 
 =head1 VERSION
 
-version 0.001
+version 0.002
 
 =head1 METHODS
 

@@ -11,9 +11,10 @@ with
     'WebService::DigitalOcean::Role::UserAgent',
     'WebService::DigitalOcean::Role::Domains',
     'WebService::DigitalOcean::Role::DomainRecords',
-    'WebService::DigitalOcean::Role::Droplets';
+    'WebService::DigitalOcean::Role::Droplets',
+    'WebService::DigitalOcean::Role::Keys';
 
-our $VERSION = '0.001'; # VERSION
+our $VERSION = '0.002'; # VERSION
 
 has api_base_url => (
     is      => 'ro',
@@ -41,7 +42,7 @@ WebService::DigitalOcean - Access the DigitalOcean RESTful API (v2)
 
 =head1 VERSION
 
-version 0.001
+version 0.002
 
 =head1 SYNOPSIS
 

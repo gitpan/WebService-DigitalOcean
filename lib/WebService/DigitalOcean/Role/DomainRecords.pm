@@ -9,7 +9,7 @@ use Type::Params qw/compile/;
 
 requires 'make_request';
 
-our $VERSION = '0.001'; # VERSION
+our $VERSION = '0.002'; # VERSION
 
 sub domain_record_create {
     state $check = compile(Object,
@@ -82,7 +82,7 @@ WebService::DigitalOcean::Role::DomainRecords - Domain Records role for DigitalO
 
 =head1 VERSION
 
-version 0.001
+version 0.002
 
 =head1 METHODS
 

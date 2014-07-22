@@ -15,19 +15,22 @@ name: WebService-DigitalOcean
 provides:
   WebService::DigitalOcean:
     file: lib/WebService/DigitalOcean.pm
-    version: '0.001'
+    version: '0.002'
   WebService::DigitalOcean::Role::DomainRecords:
     file: lib/WebService/DigitalOcean/Role/DomainRecords.pm
-    version: '0.001'
+    version: '0.002'
   WebService::DigitalOcean::Role::Domains:
     file: lib/WebService/DigitalOcean/Role/Domains.pm
-    version: '0.001'
+    version: '0.002'
   WebService::DigitalOcean::Role::Droplets:
     file: lib/WebService/DigitalOcean/Role/Droplets.pm
-    version: '0.001'
+    version: '0.002'
+  WebService::DigitalOcean::Role::Keys:
+    file: lib/WebService/DigitalOcean/Role/Keys.pm
+    version: '0.002'
   WebService::DigitalOcean::Role::UserAgent:
     file: lib/WebService/DigitalOcean/Role/UserAgent.pm
-    version: '0.001'
+    version: '0.002'
 requires:
   DateTime: '0'
   JSON: '0'
@@ -38,4 +41,4 @@ requires:
 resources:
   bugtracker: https://github.com/andrewalker/p5-webservice-digitalocean/issues
   repository: git://github.com/andrewalker/p5-webservice-digitalocean.git
-version: '0.001'
+version: '0.002'
