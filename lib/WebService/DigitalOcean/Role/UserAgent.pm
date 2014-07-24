@@ -6,7 +6,7 @@ use JSON ();
 use DateTime;
 use utf8;
 
-our $VERSION = '0.002'; # VERSION
+our $VERSION = '0.003'; # VERSION
 
 has ua => (
     is => 'lazy',
@@ -77,11 +77,85 @@ WebService::DigitalOcean::Role::UserAgent - User Agent Role for DigitalOcean Web
 
 =head1 VERSION
 
-version 0.002
+version 0.003
 
 =head1 METHODS
 
-=head2 make_request
+=head2 $res = $do->make_request($method, $path[, $data)
+
+=head3 Arguments
+
+=over
+
+=item C<Str> $method
+
+The HTTP verb, such as POST, GET, PUT, etc.
+
+=item C<Str> $path
+
+Path to the resource in the URI, to be prepended with $self->api_base_url.
+
+=item C<HashRef> $data (optional)
+
+The content to be JSON encoded and sent to DigitalOcean's API.
+
+=back
+
+=head3 Returns
+
+HashRef containing:
+
+=over
+
+=item L<HTTP::Response> response_object
+
+=item C<Bool> is_success
+
+Shortcut to $res->{response_object}{is_success}.
+
+=item C<Str> status_line
+
+Shortcut to $res->{response_object}{status_line}.
+
+=item C<HashRef> content
+
+The JSON decoded content the API has responded with.
+
+=item C<HashRef> ratelimit
+
+RateLimit headers parsed.
+
+=over
+
+=item C<Int> limit
+
+=item C<Int> remaining
+
+=item L<DateTime> reset
+
+=back
+
+=back
+
+Makes requests to the DigitalOcean, and parses the response.
+
+All requests made from other methods use L</make_request> to make them.
+
+    my $res = $self->make_request(POST => '/domains', {
+        name => 'example.com',
+        ip_address => '12.34.56.78'
+    );
+
+B<Note:> this is how L<WebService::DigitalOcean::Role::Domains/domain_create>
+is implemented. You shouldn't use this method directly in your application
+whenever possible. It's kept as a public method only because the API isn't
+entirely implemented in the module yet.
+
+More info: L<< https://developers.digitalocean.com/#introduction >>.
+
+=head2 DESCRIPTION
+
+Role used to make requests to the DigitalOcean API, and to format their response.
 
 =head1 AUTHOR
 

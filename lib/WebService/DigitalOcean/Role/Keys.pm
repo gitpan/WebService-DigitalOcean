@@ -9,7 +9,7 @@ use Type::Params qw/compile/;
 
 requires 'make_request';
 
-our $VERSION = '0.002'; # VERSION
+our $VERSION = '0.003'; # VERSION
 
 sub key_create {
     state $check = compile(Object,
@@ -72,19 +72,19 @@ WebService::DigitalOcean::Role::Keys - Keys role for DigitalOcean WebService
 
 =head1 VERSION
 
-version 0.002
+version 0.003
 
 =head1 METHODS
 
-=head2 key_create
+=head2 $do->key_create(%args)
 
 =head3 Arguments
 
 =over
 
-=item Str name
+=item C<Str> name
 
-=item Str public_key
+=item C<Str> public_key
 
 =back
 
@@ -95,15 +95,17 @@ Creates a new ssh key for this account.
         public_key => <$public_key_fh>,
     );
 
-=head2 key_delete
+More info: L<< https://developers.digitalocean.com/#create-a-new-key >>.
+
+=head2 $do->key_delete(%args)
 
 =head3 Arguments
 
 =over
 
-=item Int id
+=item C<Int> id
 
-=item Str fingerprint
+=item C<Str> fingerprint
 
 =back
 
@@ -113,15 +115,17 @@ Deletes the specified ssh key.
         id => 146432
     );
 
-=head2 key_get
+More info: L<< https://developers.digitalocean.com/#destroy-a-key >>.
+
+=head2 $do->key_get(%args)
 
 =head3 Arguments
 
 =over
 
-=item Int id
+=item C<Int> id
 
-=item Str fingerprint
+=item C<Str> fingerprint
 
 =back
 
@@ -131,9 +135,19 @@ Retrieves details about a particular ssh key, identified by id or fingerprint (p
         id => 1215,
     );
 
-=head2 key_list
+More info: L<< https://developers.digitalocean.com/#retrieve-an-existing-key >>.
+
+=head2 $do->key_list()
 
 Retrieves all the keys for this account.
+
+More info: L<< https://developers.digitalocean.com/#list-all-keys >>.
+
+=head2 DESCRIPTION
+
+Implements the SSH Keys resource.
+
+More info: L<< https://developers.digitalocean.com/#keys >>.
 
 =head1 AUTHOR
 

@@ -9,7 +9,7 @@ use Type::Params qw/compile/;
 
 requires 'make_request';
 
-our $VERSION = '0.002'; # VERSION
+our $VERSION = '0.003'; # VERSION
 
 sub domain_create {
     state $check = compile(Object,
@@ -66,21 +66,21 @@ WebService::DigitalOcean::Role::Domains - Domains role for DigitalOcean WebServi
 
 =head1 VERSION
 
-version 0.002
+version 0.003
 
 =head1 METHODS
 
-=head2 domain_create
+=head2 $do->domain_create(%args)
 
 =head3 Arguments
 
 =over
 
-=item Str name
+=item C<Str> name
 
 The domain name.
 
-=item Str ip_address
+=item C<Str> ip_address
 
 The IP address the domain will point to.
 
@@ -93,13 +93,15 @@ Creates a new domain name.
         ip_address => '12.34.56.78',
     );
 
-=head2 domain_delete
+More info: L<< https://developers.digitalocean.com/#create-a-new-domain >>.
+
+=head2 $do->domain_delete(%args)
 
 =head3 Arguments
 
 =over
 
-=item Str domain
+=item C<Str> domain
 
 The domain name.
 
@@ -111,13 +113,15 @@ Deletes the specified domain.
         domain => 'example.com',
     );
 
-=head2 domain_get
+More info: L<< https://developers.digitalocean.com/#delete-a-domain >>.
+
+=head2 $do->domain_get(%args)
 
 =head3 Arguments
 
 =over
 
-=item Str domain
+=item C<Str> domain
 
 The domain name.
 
@@ -129,7 +133,9 @@ Retrieves the specified domain.
         domain => 'example.com',
     );
 
-=head2 domain_list
+More info: L<< https://developers.digitalocean.com/#retrieve-an-existing-domain >>.
+
+=head2 $do->domain_list(%args)
 
 Lists all domains for this account.
 
@@ -138,6 +144,14 @@ Lists all domains for this account.
     for (@{ $response->{content}{domains} }) {
         print $_->{id};
     }
+
+More info: L<< https://developers.digitalocean.com/#list-all-domains >>.
+
+=head2 DESCRIPTION
+
+Implements the domain resource.
+
+More info: L<< https://developers.digitalocean.com/#domains >>.
 
 =head1 AUTHOR
 

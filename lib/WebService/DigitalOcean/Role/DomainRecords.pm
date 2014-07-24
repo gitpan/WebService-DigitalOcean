@@ -9,7 +9,7 @@ use Type::Params qw/compile/;
 
 requires 'make_request';
 
-our $VERSION = '0.002'; # VERSION
+our $VERSION = '0.003'; # VERSION
 
 sub domain_record_create {
     state $check = compile(Object,
@@ -82,41 +82,41 @@ WebService::DigitalOcean::Role::DomainRecords - Domain Records role for DigitalO
 
 =head1 VERSION
 
-version 0.002
+version 0.003
 
 =head1 METHODS
 
-=head2 domain_record_create
+=head2 $do->domain_record_create(%args)
 
 =head3 Arguments
 
 =over
 
-=item Str domain
+=item C<Str> domain
 
 The domain under which the record will be created.
 
-=item Str type
+=item C<Str> type
 
 The type of the record (eg MX, CNAME, A, etc).
 
-=item Optional[Str] name
+=item C<Str> name (optional)
 
 The name of the record.
 
-=item Optional[Str] data
+=item C<Str> data (optional)
 
 The data (such as the IP address) of the record.
 
-=item Optional[Int] priority
+=item C<Int> priority (optional)
 
 Priority, for MX or SRV records.
 
-=item Optional[Int] port
+=item C<Int> port (optional)
 
 The port, for SRV records.
 
-=item Optional[Int] weight
+=item C<Int> weight (optional)
 
 The weight, for SRV records.
 
@@ -133,17 +133,19 @@ Creates a new record for a domain.
 
     my $id = $response->{content}{domain_record}{id};
 
-=head2 domain_record_delete
+More info: L<< https://developers.digitalocean.com/#create-a-new-domain-record >>.
+
+=head2 $do->domain_record_delete(%args)
 
 =head3 Arguments
 
 =over
 
-=item Str domain
+=item C<Str> domain
 
 The domain to which the record belongs.
 
-=item Int id
+=item C<Int> id
 
 The id of the record.
 
@@ -156,17 +158,19 @@ Deletes the specified record.
         id     => 1215,
     );
 
-=head2 domain_record_get
+More info: L<< https://developers.digitalocean.com/#delete-a-domain-record >>.
+
+=head2 $do->domain_record_get(%args)
 
 =head3 Arguments
 
 =over
 
-=item Str domain
+=item C<Str> domain
 
 The domain to which the record belongs.
 
-=item Int id
+=item C<Int> id
 
 The id of the record.
 
@@ -181,13 +185,15 @@ Retrieves details about a particular record, identified by id.
 
     my $ip = $response->{content}{domain_record}{data};
 
-=head2 domain_record_list
+More info: L<< https://developers.digitalocean.com/#retrieve-an-existing-domain-record >>.
+
+=head2 $do->domain_record_list(%args)
 
 =head3 Arguments
 
 =over
 
-=item Str domain
+=item C<Str> domain
 
 The domain to which the records belong.
 
@@ -202,6 +208,14 @@ Retrieves all the records for a particular domain.
     for (@{ $response->{content}{domain_records} }) {
         print "$_->{name} => $_->{data}\n";
     }
+
+More info: L<< https://developers.digitalocean.com/#list-all-domain-records >>.
+
+=head2 DESCRIPTION
+
+Implements the domain records resource.
+
+More info: L<< https://developers.digitalocean.com/#domain-records >>.
 
 =head1 AUTHOR
 

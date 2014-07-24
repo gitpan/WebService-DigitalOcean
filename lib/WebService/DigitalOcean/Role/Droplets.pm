@@ -9,7 +9,7 @@ use Type::Params qw/compile/;
 
 requires 'make_request';
 
-our $VERSION = '0.002'; # VERSION
+our $VERSION = '0.003'; # VERSION
 
 sub droplet_create {
     state $check = compile(Object,
@@ -72,31 +72,31 @@ WebService::DigitalOcean::Role::Droplets - Droplets role for DigitalOcean WebSer
 
 =head1 VERSION
 
-version 0.002
+version 0.003
 
 =head1 METHODS
 
-=head2 droplet_create
+=head2 $do->droplet_create(%args)
 
 =head3 Arguments
 
 =over
 
-=item Str name
+=item C<Str> name
 
-=item Str region
+=item C<Str> region
 
-=item Str size
+=item C<Str> size
 
-=item Str image
+=item C<Str> image
 
-=item Optional[ ArrayRef ] ssh_keys
+=item C<ArrayRef> ssh_keys (optional)
 
-=item Optional[ Bool ] backups
+=item C<Bool> backups (optional)
 
-=item Optional[ Bool ] ipv6
+=item C<Bool> ipv6 (optional)
 
-=item Optional[ Bool ] private_networking
+=item C<Bool> private_networking (optional)
 
 =back
 
@@ -113,13 +113,15 @@ Creates a new droplet.
         private_networking => 0,
     );
 
-=head2 droplet_delete
+More info: L<< https://developers.digitalocean.com/#create-a-new-droplet >>.
+
+=head2 $do->droplet_delete(%args)
 
 =head3 Arguments
 
 =over
 
-=item Int id
+=item C<Int> id
 
 =back
 
@@ -129,13 +131,15 @@ Deletes the specified droplet.
         id => 1250928,
     );
 
-=head2 droplet_get
+More info: L<< https://developers.digitalocean.com/#delete-a-droplet >>.
+
+=head2 $do->droplet_get(%args)
 
 =head3 Arguments
 
 =over
 
-=item Int id
+=item C<Int> id
 
 =back
 
@@ -145,7 +149,9 @@ Retrieves the specified droplet.
         droplet => 15314123,
     );
 
-=head2 droplet_list
+More info: L<< https://developers.digitalocean.com/#retrieve-an-existing-droplet-by-id >>.
+
+=head2 $do->droplet_list()
 
 Lists all droplets for this account.
 
@@ -154,6 +160,14 @@ Lists all droplets for this account.
     for (@{ $response->{content}{droplets} }) {
         print $_->{id};
     }
+
+More info: L<< https://developers.digitalocean.com/#list-all-droplets >>.
+
+=head2 DESCRIPTION
+
+Implements the droplets resource.
+
+More info: L<< https://developers.digitalocean.com/#droplets >>.
 
 =head1 AUTHOR
 
