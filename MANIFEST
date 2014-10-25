@@ -7,8 +7,11 @@ Makefile.PL
 lib/WebService/DigitalOcean.pm
 lib/WebService/DigitalOcean/Role/DomainRecords.pm
 lib/WebService/DigitalOcean/Role/Domains.pm
+lib/WebService/DigitalOcean/Role/DropletActions.pm
 lib/WebService/DigitalOcean/Role/Droplets.pm
 lib/WebService/DigitalOcean/Role/Keys.pm
+lib/WebService/DigitalOcean/Role/Regions.pm
+lib/WebService/DigitalOcean/Role/Sizes.pm
 lib/WebService/DigitalOcean/Role/UserAgent.pm
 t/basic.t
 xt/release/pod-coverage.t

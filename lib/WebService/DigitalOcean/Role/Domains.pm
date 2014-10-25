@@ -3,18 +3,18 @@ package WebService::DigitalOcean::Role::Domains;
 use utf8;
 use Moo::Role;
 use feature 'state';
-use Types::Standard qw/Str Object slurpy Dict/;
+use Types::Standard qw/Str Object Dict/;
 use Type::Utils;
 use Type::Params qw/compile/;
 
 requires 'make_request';
 
-our $VERSION = '0.003'; # VERSION
+our $VERSION = '0.010'; # VERSION
 
 sub domain_create {
     state $check = compile(Object,
-        slurpy Dict[
-            name => Str,
+        Dict[
+            name       => Str,
             ip_address => Str,
         ],
     );
@@ -31,25 +31,17 @@ sub domain_list {
 }
 
 sub domain_get {
-    state $check = compile(Object,
-        slurpy Dict[
-            domain => Str,
-        ],
-    );
-    my ($self, $opts) = $check->(@_);
+    state $check = compile(Object, Str);
+    my ($self, $domain) = $check->(@_);
 
-    return $self->make_request(GET => "/domains/$opts->{domain}");
+    return $self->make_request(GET => "/domains/$domain");
 }
 
 sub domain_delete {
-    state $check = compile(Object,
-        slurpy Dict[
-            domain => Str,
-        ],
-    );
-    my ($self, $opts) = $check->(@_);
+    state $check = compile(Object, Str);
+    my ($self, $domain) = $check->(@_);
 
-    return $self->make_request(DELETE => "/domains/$opts->{domain}");
+    return $self->make_request(DELETE => "/domains/$domain");
 }
 
 1;
@@ -66,21 +58,21 @@ WebService::DigitalOcean::Role::Domains - Domains role for DigitalOcean WebServi
 
 =head1 VERSION
 
-version 0.003
+version 0.010
 
 =head1 METHODS
 
-=head2 $do->domain_create(%args)
+=head2 $do->domain_create(\%args)
 
 =head3 Arguments
 
 =over
 
-=item C<Str> name
+=item C<Str> $args{name}
 
 The domain name.
 
-=item C<Str> ip_address
+=item C<Str> $args{ip_address}
 
 The IP address the domain will point to.
 
@@ -88,20 +80,20 @@ The IP address the domain will point to.
 
 Creates a new domain name.
 
-    $do->domain_create(
-        name => 'example.com',
+    $do->domain_create({
+        name       => 'example.com',
         ip_address => '12.34.56.78',
-    );
+    });
 
 More info: L<< https://developers.digitalocean.com/#create-a-new-domain >>.
 
-=head2 $do->domain_delete(%args)
+=head2 $do->domain_delete($domain)
 
 =head3 Arguments
 
 =over
 
-=item C<Str> domain
+=item C<Str> $domain
 
 The domain name.
 
@@ -109,19 +101,17 @@ The domain name.
 
 Deletes the specified domain.
 
-    $do->domain_delete(
-        domain => 'example.com',
-    );
+    $do->domain_delete('example.com');
 
 More info: L<< https://developers.digitalocean.com/#delete-a-domain >>.
 
-=head2 $do->domain_get(%args)
+=head2 $do->domain_get($domain)
 
 =head3 Arguments
 
 =over
 
-=item C<Str> domain
+=item C<Str> $domain
 
 The domain name.
 
@@ -129,13 +119,11 @@ The domain name.
 
 Retrieves the specified domain.
 
-    my $response = $do->domain_get(
-        domain => 'example.com',
-    );
+    my $response = $do->domain_get('example.com');
 
 More info: L<< https://developers.digitalocean.com/#retrieve-an-existing-domain >>.
 
-=head2 $do->domain_list(%args)
+=head2 $do->domain_list()
 
 Lists all domains for this account.
 

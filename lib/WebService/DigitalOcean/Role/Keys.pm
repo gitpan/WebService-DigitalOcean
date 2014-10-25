@@ -3,17 +3,17 @@ package WebService::DigitalOcean::Role::Keys;
 use utf8;
 use Moo::Role;
 use feature 'state';
-use Types::Standard qw/Str Int Object slurpy Dict Optional/;
+use Types::Standard qw/Str Int Object Dict Optional/;
 use Type::Utils;
 use Type::Params qw/compile/;
 
 requires 'make_request';
 
-our $VERSION = '0.003'; # VERSION
+our $VERSION = '0.010'; # VERSION
 
 sub key_create {
     state $check = compile(Object,
-        slurpy Dict[
+        Dict[
             name       => Str,
             public_key => Str,
         ],
@@ -32,7 +32,7 @@ sub key_list {
 
 sub key_get {
     state $check = compile(Object,
-        slurpy Dict[
+        Dict[
             fingerprint => Optional[Str],
             id          => Optional[Int],
         ],
@@ -46,7 +46,7 @@ sub key_get {
 
 sub key_delete {
     state $check = compile(Object,
-        slurpy Dict[
+        Dict[
             fingerprint => Optional[Str],
             id          => Optional[Int],
         ],
@@ -72,68 +72,64 @@ WebService::DigitalOcean::Role::Keys - Keys role for DigitalOcean WebService
 
 =head1 VERSION
 
-version 0.003
+version 0.010
 
 =head1 METHODS
 
-=head2 $do->key_create(%args)
+=head2 $do->key_create(\%args)
 
 =head3 Arguments
 
 =over
 
-=item C<Str> name
+=item C<Str> $args{name}
 
-=item C<Str> public_key
+=item C<Str> $args{public_key}
 
 =back
 
 Creates a new ssh key for this account.
 
-    my $response = $do->key_create(
-        name => 'my public key',
+    my $response = $do->key_create({
+        name       => 'my public key',
         public_key => <$public_key_fh>,
-    );
+    });
 
 More info: L<< https://developers.digitalocean.com/#create-a-new-key >>.
 
-=head2 $do->key_delete(%args)
+=head2 $do->key_delete(\%args)
 
 =head3 Arguments
 
 =over
 
-=item C<Int> id
+=item C<Int> $args{id} I<OR>
 
-=item C<Str> fingerprint
+=item C<Str> $args{fingerprint}
 
 =back
 
 Deletes the specified ssh key.
 
-    $do->key_delete(
-        id => 146432
-    );
+    $do->key_delete({ id => 146432 });
 
 More info: L<< https://developers.digitalocean.com/#destroy-a-key >>.
 
-=head2 $do->key_get(%args)
+=head2 $do->key_get(\%args)
 
 =head3 Arguments
 
 =over
 
-=item C<Int> id
+=item C<Int> $args{id} I<OR>
 
-=item C<Str> fingerprint
+=item C<Str> $args{fingerprint}
 
 =back
 
 Retrieves details about a particular ssh key, identified by id or fingerprint (pick one).
 
-    my $response = $do->key_get(
-        id => 1215,
-    );
+    my $response = $do->key_get({ id => 1215 });
 
 More info: L<< https://developers.digitalocean.com/#retrieve-an-existing-key >>.
 
