@@ -17,7 +17,7 @@ with
     'WebService::DigitalOcean::Role::Regions',
     'WebService::DigitalOcean::Role::Sizes';
 
-our $VERSION = '0.010'; # VERSION
+our $VERSION = '0.011'; # VERSION
 
 has api_base_url => (
     is      => 'ro',
@@ -45,7 +45,7 @@ WebService::DigitalOcean - Access the DigitalOcean RESTful API (v2)
 
 =head1 VERSION
 
-version 0.010
+version 0.011
 
 =head1 SYNOPSIS
 
