@@ -9,7 +9,7 @@ use Type::Params qw/compile/;
 
 requires 'make_request';
 
-our $VERSION = '0.011'; # VERSION
+our $VERSION = '0.020'; # VERSION
 
 sub droplet_create {
     state $check = compile(Object,
@@ -64,98 +64,23 @@ WebService::DigitalOcean::Role::Droplets - Droplets role for DigitalOcean WebSer
 
 =head1 VERSION
 
-version 0.011
+version 0.020
+
+=head1 DESCRIPTION
+
+Implements the droplets methods.
 
 =head1 METHODS
 
-=head2 $do->droplet_create(\%args)
+=head2 droplet_create
 
-=head3 Arguments
+=head2 droplet_list
 
-=over
+=head2 droplet_get
 
-=item C<Str> $args{name}
+=head2 droplet_delete
 
-=item C<Str> $args{region}
-
-=item C<Str> $args{size}
-
-=item C<Str> $args{image}
-
-=item C<ArrayRef> $args{ssh_keys} (optional)
-
-=item C<Bool> $args{backups} (optional)
-
-=item C<Bool> $args{ipv6} (optional)
-
-=item C<Bool> $args{private_networking} (optional)
-
-=back
-
-Creates a new droplet.
-
-    $do->droplet_create(
-        name               => "My-Droplet",
-        region             => "nyc1",
-        size               => "512mb",
-        image              => 449676389,
-        ssh_keys           => [ 52341234, 215124, 64325534 ],
-        backups            => 0,
-        ipv6               => 1,
-        private_networking => 0,
-    );
-
-More info: L<< https://developers.digitalocean.com/#create-a-new-droplet >>.
-
-=head2 $do->droplet_delete($id)
-
-=head3 Arguments
-
-=over
-
-=item C<Int> $id
-
-=back
-
-Deletes the specified droplet.
-
-    $do->droplet_delete(1250928);
-
-More info: L<< https://developers.digitalocean.com/#delete-a-droplet >>.
-
-=head2 $do->droplet_get($id)
-
-=head3 Arguments
-
-=over
-
-=item C<Int> $id
-
-=back
-
-Retrieves the specified droplet.
-
-    my $response = $do->droplet_get(15314123);
-
-More info: L<< https://developers.digitalocean.com/#retrieve-an-existing-droplet-by-id >>.
-
-=head2 $do->droplet_list()
-
-Lists all droplets for this account.
-
-    my $response = $do->droplet_list();
-
-    for (@{ $response->{content}{droplets} }) {
-        print $_->{id};
-    }
-
-More info: L<< https://developers.digitalocean.com/#list-all-droplets >>.
-
-=head2 DESCRIPTION
-
-Implements the droplets resource.
-
-More info: L<< https://developers.digitalocean.com/#droplets >>.
+See main documentation in L<WebService::DigitalOcean>.
 
 =head1 AUTHOR
 

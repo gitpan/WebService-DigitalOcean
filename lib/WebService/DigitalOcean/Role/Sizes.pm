@@ -9,7 +9,7 @@ use Type::Params qw/compile/;
 
 requires 'make_request';
 
-our $VERSION = '0.011'; # VERSION
+our $VERSION = '0.020'; # VERSION
 
 sub size_list {
     state $check = compile(Object);
@@ -32,27 +32,17 @@ WebService::DigitalOcean::Role::Sizes - Sizes role for DigitalOcean WebService
 
 =head1 VERSION
 
-version 0.011
+version 0.020
 
-=head1 METHODS
-
-=head2 $do->size_list()
-
-Retrieves all the sizes available in Digital Ocean.
-
-    my $sizes = $do->size_list();
-
-    for my $s (@{ $sizes->{content}{sizes} }) {
-        say "Size $s->{slug} costs $s->{price_hourly} per hour.";
-    }
-
-More info: L<< https://developers.digitalocean.com/#list-all-sizes >>.
-
-=head2 DESCRIPTION
+=head1 DESCRIPTION
 
 Implements the Sizes resource.
 
-More info: L<< https://developers.digitalocean.com/#sizes >>.
+=head1 METHODS
+
+=head2 size_list
+
+See main documentation in L<WebService::DigitalOcean>.
 
 =head1 AUTHOR
 

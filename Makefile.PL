@@ -26,7 +26,7 @@ my %WriteMakefileArgs = (
     "Moo" => 0,
     "Type::Tiny" => 0
   },
-  "VERSION" => "0.011",
+  "VERSION" => "0.020",
   "test" => {
     "TESTS" => "t/*.t"
   }

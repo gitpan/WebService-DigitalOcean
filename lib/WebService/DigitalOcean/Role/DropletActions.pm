@@ -9,7 +9,7 @@ use Type::Params qw/compile multisig/;
 
 requires 'make_request';
 
-our $VERSION = '0.011'; # VERSION
+our $VERSION = '0.020'; # VERSION
 
 sub droplet_resize {
     state $check = compile(
@@ -222,306 +222,47 @@ WebService::DigitalOcean::Role::DropletActions - Droplet Actions role for Digita
 
 =head1 VERSION
 
-version 0.011
+version 0.020
+
+=head1 DESCRIPTION
+
+Implements the droplets actions methods.
 
 =head1 METHODS
 
-=head2 $do->droplet_resize(\%args)
+=head2 droplet_action_get
 
-=head3 Arguments
+=head2 droplet_resize
 
-=over
+=head2 droplet_change_kernel
 
-=item C<Int> $args{droplet}
+=head2 droplet_rebuild
 
-=item C<Str> $args{size}
+=head2 droplet_restore
 
-=back
+=head2 droplet_rename
 
-Resizes a droplet.
+=head2 droplet_snapshot
 
-    $do->droplet_resize({
-        droplet => 123456,
-        size    => '1gb',
-    });
+=head2 droplet_reboot
 
-More info: L<< https://developers.digitalocean.com/#resize-a-droplet >>.
+=head2 droplet_power_cycle
 
-=head2 $do->droplet_change_kernel(\%args)
+=head2 droplet_power_on
 
-=head3 Arguments
+=head2 droplet_power_off
 
-=over
+=head2 droplet_password_reset
 
-=item C<Int> $args{droplet}
+=head2 droplet_shutdown
 
-=item C<Int> $args{kernel}
+=head2 droplet_enable_ipv6
 
-=back
+=head2 droplet_enable_private_networking
 
-Changes the kernel of a droplet.
+=head2 droplet_disable_backups
 
-    $do->droplet_change_kernel({
-        droplet => 123456,
-        kernel  => 654321,
-    });
-
-More info: L<< https://developers.digitalocean.com/#change-the-kernel >>.
-
-=head2 $do->droplet_rebuild(\%args)
-
-=head3 Arguments
-
-=over
-
-=item C<Int> $args{droplet}
-
-=item C<Str> $args{image}
-
-=back
-
-Rebuilds a droplet.
-
-    $do->droplet_rebuild({
-        droplet => 123456,
-        image   => 654321,
-    });
-
-More info: L<< https://developers.digitalocean.com/#rebuild-a-droplet >>.
-
-=head2 $do->droplet_restore(\%args)
-
-=head3 Arguments
-
-=over
-
-=item C<Int> $args{droplet}
-
-=item C<Str> $args{image}
-
-=back
-
-Restores a droplet to an image backup.
-
-    $do->droplet_rebuild({
-        droplet => 123456,
-        image   => 654321,
-    });
-
-More info: L<< https://developers.digitalocean.com/#restore-a-droplet >>.
-
-=head2 $do->droplet_rename(\%args)
-
-=head3 Arguments
-
-=over
-
-=item C<Int> $args{droplet}
-
-=item C<Str> $args{name}
-
-=back
-
-Renames a droplet, thus setting the reverse DNS.
-
-    $do->droplet_rename({
-        droplet => 123456,
-        name    => 'new-name',
-    });
-
-More info: L<< https://developers.digitalocean.com/#rename-a-droplet >>.
-
-=head2 $do->droplet_snapshot(\%args)
-
-=head3 Arguments
-
-=over
-
-=item C<Int> $args{droplet}
-
-=item C<Str> $args{name}
-
-=back
-
-Saves a snapshopt of the droplet.
-
-    $do->droplet_rebuild({
-        droplet => 123456,
-        name    => 'snapshot-name',
-    });
-
-More info: L<< https://developers.digitalocean.com/#rebuild-a-droplet >>.
-
-=head2 $do->droplet_reboot($droplet_id)
-
-=head3 Arguments
-
-=over
-
-=item C<Int> $droplet_id
-
-=back
-
-Reboots droplet.
-
-    $do->droplet_reboot(123456);
-
-More info: L<< https://developers.digitalocean.com/#reboot-a-droplet >>.
-
-=head2 $do->droplet_power_cycle($droplet_id)
-
-=head3 Arguments
-
-=over
-
-=item C<Int> $droplet_id
-
-=back
-
-Power cycles droplet.
-
-    $do->droplet_power_cycle(123456);
-
-More info: L<< https://developers.digitalocean.com/#power-cycle-a-droplet >>.
-
-=head2 $do->droplet_power_on($droplet_id)
-
-=head3 Arguments
-
-=over
-
-=item C<Int> $droplet_id
-
-=back
-
-Powers on droplet.
-
-    $do->droplet_power_on(123456);
-
-More info: L<< https://developers.digitalocean.com/#power-on-a-droplet >>.
-
-=head2 $do->droplet_power_off($droplet_id)
-
-=head3 Arguments
-
-=over
-
-=item C<Int> $droplet_id
-
-=back
-
-Powers off droplet.
-
-    $do->droplet_power_off(123456);
-
-More info: L<< https://developers.digitalocean.com/#power-off-a-droplet >>.
-
-=head2 $do->droplet_password_reset($droplet_id)
-
-=head3 Arguments
-
-=over
-
-=item C<Int> $droplet_id
-
-=back
-
-Resets the root password of the droplet.
-
-    $do->droplet_password_reset(123456);
-
-More info: L<< https://developers.digitalocean.com/#password-reset-a-droplet >>.
-
-=head2 $do->droplet_shutdown($droplet_id)
-
-=head3 Arguments
-
-=over
-
-=item C<Int> $droplet_id
-
-=back
-
-Shuts down a droplet
-
-    $do->droplet_shutdown(123456);
-
-More info: L<< https://developers.digitalocean.com/#shutdown-a-droplet >>.
-
-=head2 $do->droplet_enable_ipv6($droplet_id)
-
-=head3 Arguments
-
-=over
-
-=item C<Int> $droplet_id
-
-=back
-
-Enables IPv6 in a droplet.
-
-    $do->droplet_enable_ipv6(123456);
-
-More info: L<< https://developers.digitalocean.com/#enable-ipv6 >>.
-
-=head2 $do->droplet_enable_private_networking($droplet_id)
-
-=head3 Arguments
-
-=over
-
-=item C<Int> $droplet_id
-
-=back
-
-Enables private networking for a droplet.
-
-    $do->droplet_enable_private_networking(123456);
-
-More info: L<< https://developers.digitalocean.com/#enable-private-networking >>.
-
-=head2 $do->droplet_disable_backups($droplet_id)
-
-=head3 Arguments
-
-=over
-
-=item C<Int> $droplet_id
-
-=back
-
-Disables backups for the droplet.
-
-    $do->droplet_disable_backups(123456);
-
-More info: L<< https://developers.digitalocean.com/#disable-backups >>.
-
-=head2 $do->droplet_action_get(\%args)
-
-=head3 Arguments
-
-=over
-
-=item C<Int> $args{droplet}
-
-=item C<Int> $args{action}
-
-=back
-
-Retrieve details from a specific action.
-
-    $do->droplet_action_get({
-        droplet => 123456,
-        action  => 53,
-    });
-
-More info: L<< https://developers.digitalocean.com/#retrieve-a-droplet-action >>.
-
-=head2 DESCRIPTION
-
-Implements the droplets actions resource.
-
-More info: L<< https://developers.digitalocean.com/#droplet-actions >>.
+See main documentation in L<WebService::DigitalOcean>.
 
 =head1 AUTHOR
 

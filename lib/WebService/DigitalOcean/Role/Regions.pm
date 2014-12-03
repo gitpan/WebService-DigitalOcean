@@ -9,7 +9,7 @@ use Type::Params qw/compile/;
 
 requires 'make_request';
 
-our $VERSION = '0.011'; # VERSION
+our $VERSION = '0.020'; # VERSION
 
 sub region_list {
     state $check = compile(Object);
@@ -32,29 +32,17 @@ WebService::DigitalOcean::Role::Regions - Regions role for DigitalOcean WebServi
 
 =head1 VERSION
 
-version 0.011
+version 0.020
 
-=head1 METHODS
-
-=head2 $do->region_list()
-
-Retrieves all the regions available in Digital Ocean.
-
-    my $regions = $do->region_list();
-
-    for my $r (@{ $regions->{content}{regions} }) {
-        if ($r->{available}) {
-            say "$r->{name} is available";
-        }
-    }
-
-More info: L<< https://developers.digitalocean.com/#list-all-regions >>.
-
-=head2 DESCRIPTION
+=head1 DESCRIPTION
 
 Implements the Regions resource.
 
-More info: L<< https://developers.digitalocean.com/#regions >>.
+=head1 METHODS
+
+=head2 region_list
+
+See main documentation in L<WebService::DigitalOcean>.
 
 =head1 AUTHOR
 

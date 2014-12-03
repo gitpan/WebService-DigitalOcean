@@ -9,7 +9,7 @@ use Type::Params qw/compile/;
 
 requires 'make_request';
 
-our $VERSION = '0.011'; # VERSION
+our $VERSION = '0.020'; # VERSION
 
 sub domain_create {
     state $check = compile(Object,
@@ -58,88 +58,23 @@ WebService::DigitalOcean::Role::Domains - Domains role for DigitalOcean WebServi
 
 =head1 VERSION
 
-version 0.011
+version 0.020
+
+=head1 DESCRIPTION
+
+Implements the domain methods.
 
 =head1 METHODS
 
-=head2 $do->domain_create(\%args)
+=head2 domain_create
 
-=head3 Arguments
+=head2 domain_delete
 
-=over
+=head2 domain_get
 
-=item C<Str> $args{name}
+=head2 domain_list
 
-The domain name.
-
-=item C<Str> $args{ip_address}
-
-The IP address the domain will point to.
-
-=back
-
-Creates a new domain name.
-
-    $do->domain_create({
-        name       => 'example.com',
-        ip_address => '12.34.56.78',
-    });
-
-More info: L<< https://developers.digitalocean.com/#create-a-new-domain >>.
-
-=head2 $do->domain_delete($domain)
-
-=head3 Arguments
-
-=over
-
-=item C<Str> $domain
-
-The domain name.
-
-=back
-
-Deletes the specified domain.
-
-    $do->domain_delete('example.com');
-
-More info: L<< https://developers.digitalocean.com/#delete-a-domain >>.
-
-=head2 $do->domain_get($domain)
-
-=head3 Arguments
-
-=over
-
-=item C<Str> $domain
-
-The domain name.
-
-=back
-
-Retrieves the specified domain.
-
-    my $response = $do->domain_get('example.com');
-
-More info: L<< https://developers.digitalocean.com/#retrieve-an-existing-domain >>.
-
-=head2 $do->domain_list()
-
-Lists all domains for this account.
-
-    my $response = $do->domain_list();
-
-    for (@{ $response->{content}{domains} }) {
-        print $_->{id};
-    }
-
-More info: L<< https://developers.digitalocean.com/#list-all-domains >>.
-
-=head2 DESCRIPTION
-
-Implements the domain resource.
-
-More info: L<< https://developers.digitalocean.com/#domains >>.
+See main documentation in L<WebService::DigitalOcean>.
 
 =head1 AUTHOR
 

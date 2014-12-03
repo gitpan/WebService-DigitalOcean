@@ -9,7 +9,7 @@ use Type::Params qw/compile/;
 
 requires 'make_request';
 
-our $VERSION = '0.011'; # VERSION
+our $VERSION = '0.020'; # VERSION
 
 sub key_create {
     state $check = compile(Object,
@@ -72,78 +72,23 @@ WebService::DigitalOcean::Role::Keys - Keys role for DigitalOcean WebService
 
 =head1 VERSION
 
-version 0.011
+version 0.020
+
+=head1 DESCRIPTION
+
+Implements the SSH Keys methods.
 
 =head1 METHODS
 
-=head2 $do->key_create(\%args)
+=head2 key_create
 
-=head3 Arguments
+=head2 key_list
 
-=over
+=head2 key_get
 
-=item C<Str> $args{name}
+=head2 key_delete
 
-=item C<Str> $args{public_key}
-
-=back
-
-Creates a new ssh key for this account.
-
-    my $response = $do->key_create({
-        name       => 'my public key',
-        public_key => <$public_key_fh>,
-    });
-
-More info: L<< https://developers.digitalocean.com/#create-a-new-key >>.
-
-=head2 $do->key_delete(\%args)
-
-=head3 Arguments
-
-=over
-
-=item C<Int> $args{id} I<OR>
-
-=item C<Str> $args{fingerprint}
-
-=back
-
-Deletes the specified ssh key.
-
-    $do->key_delete({ id => 146432 });
-
-More info: L<< https://developers.digitalocean.com/#destroy-a-key >>.
-
-=head2 $do->key_get(\%args)
-
-=head3 Arguments
-
-=over
-
-=item C<Int> $args{id} I<OR>
-
-=item C<Str> $args{fingerprint}
-
-=back
-
-Retrieves details about a particular ssh key, identified by id or fingerprint (pick one).
-
-    my $response = $do->key_get({ id => 1215 });
-
-More info: L<< https://developers.digitalocean.com/#retrieve-an-existing-key >>.
-
-=head2 $do->key_list()
-
-Retrieves all the keys for this account.
-
-More info: L<< https://developers.digitalocean.com/#list-all-keys >>.
-
-=head2 DESCRIPTION
-
-Implements the SSH Keys resource.
-
-More info: L<< https://developers.digitalocean.com/#keys >>.
+See main documentation in L<WebService::DigitalOcean>.
 
 =head1 AUTHOR
 

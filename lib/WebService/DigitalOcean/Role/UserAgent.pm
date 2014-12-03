@@ -4,9 +4,10 @@ use Moo::Role;
 use LWP::UserAgent;
 use JSON ();
 use DateTime;
+use Types::Standard qw/is_HashRef/;
 use utf8;
 
-our $VERSION = '0.011'; # VERSION
+our $VERSION = '0.020'; # VERSION
 
 has ua => (
     is => 'lazy',
@@ -47,7 +48,23 @@ sub make_request {
     };
 
     if ($response->content_type eq 'application/json') {
-        $result->{content} = JSON::decode_json($response->decoded_content);
+        my $decoded_response = JSON::decode_json($response->decoded_content);
+
+        if (is_HashRef($decoded_response)) {
+            $result->{meta}  = delete $decoded_response->{meta};
+            $result->{links} = delete $decoded_response->{links};
+
+            if (keys(%$decoded_response) == 1) {
+                my @key = keys %$decoded_response;
+                $result->{content} = delete $decoded_response->{$key[0]};
+            }
+            else {
+                $result->{content} = $decoded_response;
+            }
+        }
+        else {
+            $result->{content} = $decoded_response;
+        }
     }
 
     if (my $ratelimit = $response->header('RateLimit-Limit')) {
@@ -77,7 +94,11 @@ WebService::DigitalOcean::Role::UserAgent - User Agent Role for DigitalOcean Web
 
 =head1 VERSION
 
-version 0.011
+version 0.020
+
+=head1 DESCRIPTION
+
+Role used to make requests to the DigitalOcean API, and to format their response.
 
 =head1 METHODS
 
@@ -152,10 +173,6 @@ whenever possible. It's kept as a public method only because the API isn't
 entirely implemented in the module yet.
 
 More info: L<< https://developers.digitalocean.com/#introduction >>.
-
-=head2 DESCRIPTION
-
-Role used to make requests to the DigitalOcean API, and to format their response.
 
 =head1 AUTHOR
 
